@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <title>Date Website</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background: #ffe6f0;
+            color: #cc3366;
+            /* pink soft */
+        }
+
+        h2,
+        p {
+            color: #cc3366;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #ffe6f0;
+        }
+
+        .card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .card.show {
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        input,
+        select,
+        button {
+            background-color: #ffffff;
+            color: rgb(253, 124, 197);
+            border: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+            font-size: 16px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            margin-top: 12px;
+        }
+
+        button:hover {
+            background-color: #ffc8de;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card" id="step1">
+        <h2>Siapaaa inii? 👀</h2>
+        <input type="text" id="nameInput" placeholder="Enter your name..." />
+        <button onclick="checkName()">Next</button>
+    </div>
+
+    <div class="card hidden" id="step2">
+        <h2>Ohh! Kesayangankuu ternyata! 🥹💕 yuk kita ngedate! </h2>
+        <button onclick="answerDate(true)">MAUUUUU</button>
+        <button onclick="answerDate(false)">Lagi Mager ...</button>
+    </div>
+
+    <div class="card hidden" id="step3">
+        <h2>Yaampun kamu mau date sama aku?! 🥹💕 tempatnya mau di manaa~? 😍🏡</h2>
+        <input type="text" id="placeInput" placeholder="Kafe, Resto?" />
+        <button onclick="nextToTime()">Next</button>
+    </div>
+
+    <div class="card hidden" id="step4">
+        <h2>Waktunya ditentuin yuk! ⏰💖 Mau pagi, siang, atau malam? Aku siap kapan aja kok! </h2>
+        <select id="timeSelect">
+            <option value="" disabled selected>Pilih waktu</option>
+            <option value="pagi">Pagi buta!</option>
+            <option value="siang">Siang deh!</option>
+            <option value="malam">Malam biar adem!</option>
+        </select>
+        <button onclick="showSummary()">Deal Done!</button>
+    </div>
+
+    <div class="card hidden" id="summary">
+        <h2 id="summaryText"></h2>
+    </div>
+
+    <script>
+        function checkName() {
+            const allowedNames = ["ian", "ianikov", "zhenya", "cece"];
+            const nameInput = document.getElementById("nameInput").value.toLowerCase().trim();
+            if (allowedNames.includes(nameInput)) {
+                document.getElementById("step1").classList.add("hidden");
+                document.getElementById("step2").classList.remove("hidden");
+            } else {
+                alert("Maaf, kamu siapa ya?");
+            }
+        }
+
+        function answerDate(isYes) {
+            if (isYes) {
+                document.getElementById("step2").classList.add("hidden");
+                document.getElementById("step3").classList.remove("hidden");
+            } else {
+                alert("Yah, mungkin lain kali ya...");
+            }
+        }
+
+        function nextToTime() {
+            const place = document.getElementById("placeInput").value.trim();
+            if (place === "") {
+                alert("Tolong isi tempatnya dulu ya!");
+            } else {
+                document.getElementById("step3").classList.add("hidden");
+
+                const step4 = document.getElementById("step4");
+                step4.classList.remove("hidden");
+                step4.classList.add("show");
+            }
+        }
+
+
+        function showSummary() {
+            const place = document.getElementById("placeInput").value.trim();
+            const time = document.getElementById("timeSelect").value;
+
+            if (!time) {
+                alert("Pilih waktunya dulu dong!");
+                return;
+            }
+
+            const summary = `
+  🤩 HOREE JSADJSHASDDS OKEDEH!! 🎉<br><br>
+  Kamu date sama aku di <strong>${place}</strong> pada <strong>${time}</strong> hari ini!<br>
+  AKU JEMPUUUT!! broom broom! 🛵💕<br><br>
+  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHMxMGNkZzh6eW13aWJjZnZ2aXZrc2M1NjByc2IwZGVrc2V5a21ubCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/26FLdmIp6wJr91JAI/giphy.gif" alt="excited gif" style="width: 100%; max-width: 250px; border-radius: 12px;" />
+`;
+
+            document.getElementById("summaryText").innerHTML = summary;
+            document.getElementById("step4").classList.add("hidden");
+            const summaryCard = document.getElementById("summary");
+            summaryCard.classList.remove("hidden");
+            summaryCard.classList.add("show");
+        }
+
+    </script>
+
+</body>
+
+</html>
